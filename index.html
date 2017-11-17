@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Blog</title>
+		<link rel="stylesheet" type="text/css" href="css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="css/base.css"/>
+		<link rel="stylesheet" type="text/css" href="css/index.css"/>
+		<script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+		<script src="js/paging.js"></script>
+	</head>
+	<body>
+	  <!--容器-->
+	  <div id="wrapper">
+	    <!--头部-->
+	    <header>
+	      <div class="top">
+	        <div class="logo fl">这一切没有想象的那么遭</div>
+	        <!--搜索框-->
+	        <div class="search fr">
+	        	<form action="#" method="post" id="search-form">
+	        		<input type="text" id="keyword" class="input" placeholder="请输入关键字"/>
+	        		<input type="submit" class="submit" value="搜索"/>
+	        	</form>
+	        </div>
+	        <!--清除浮动-->
+	        <div class="clear"></div>
+	        <!--导航-->
+	        <nav>
+	          <div class="nav">
+	          	<ul class="menu">
+	          		<li><a href="javascript:;" onclick="chgPage('home')">首页</a></li>
+                <li><a href="javascript:;" onclick="chgPage('article')">技术文章</a></li>
+                <li><a href="javascript:;" onclick="chgPage('note')">读书笔记</a></li>
+                <li><a href="javascript:;" onclick="chgPage('about')">个人简介</a></li>
+                <li><a href="javascript:;" onclick="chgPage('message')">给我留言</a></li>
+	          	</ul>
+	          	<div class="theme fr">
+	          	  <span id="theme-span">主题切换</span>
+                <select id="sel">
+                  <option value="0">蘇芳</option>
+                  <option value="1">枯草</option>
+                  <option value="2">石竹</option>
+                  <option value="3">錆青磁</option>
+                  <option value="4">鳩羽紫</option>
+                  <option value="5">遠洲鼠</option>
+                  <option value="6">柳煤竹茶</option>
+                  <option value="7">落栗</option>
+                </select>
+              </div>
+	          </div>
+	        </nav>
+	      </div>
+	    </header>
+	    <!--主体内容-->
+	    <section id="content">
+	      
+	    </section>
+	    <!--页底-->
+	    
+	    <footer>
+        <div class="copyright">
+          <p>&copy;2017 版权所有:这一切没有想象的那么遭 备案号：甘ICP备19930601号</p>
+        </div>
+      </footer>
+	  </div>
+	</body>
+	<script>
+	  //页面加载时运行
+	  $(document).ready(function(){
+	    $("#content").load('home.html');
+      changeTheme();
+	  });
+		// 文章一级分类   文章二级分类 
+		var type1 = type2 = null;
+
+    // 点击菜单切换主体内容
+    var chgPage = function(page){
+			if(page == "article") {type1 = "TEC";type2 = null;};		//文章一级分类：TEC-技术文章
+			if(page == "note") {type1 = "NOTE";type2 = null;}		//文章一级分类：NOTE-读书笔记
+      $("#content").load(page + ".html");
+    }
+    //背景颜色切换功能
+    function changeTheme(){
+      $("#sel").change(function(){
+        let index = $('#sel').get(0).selectedIndex;
+        let theme = ['#b35e59','#ddc468','#f1c4be','#b8d3ca','#8a7e94','#d4bb9c','#a7ab86','#93816d'];
+        $("body").css("background-color",theme[index]);
+      });
+   }
+	 //根据文章分类获取文章列表
+	 function getArtLsByType(type_lv1, type_lv2){
+  	type1 = type_lv1;
+    type2 = type_lv2;
+    if(type_lv1 == "TEC"){
+			$("#content").load("article.html");
+		} 
+    if(type_lv1 == "NOTE") {
+			$("#content").load("note.html");
+		}
+   }
+	//  根据id去查询对应的文章内容
+	 function getArticleById(id){
+    var result = null;
+    $.ajax({
+      type:'get',
+      url:'http://127.0.0.1/myblog-wysiwyg/data/article/getArticle.php?art_id='+id,
+      async: false, 
+      success:(res)=>{
+        result = res;
+      },
+      error:err=>{
+        console.log(err);
+      }
+    });
+    return result;
+  }
+	// 根据文章id更新对应的点击率
+	function updateArtHits(id){
+    $.ajax({
+      type:'post',
+      url:'http://127.0.0.1/myblog-wysiwyg/data/article/updateArtHits.php',
+      data:{id:id}
+    });
+  }
+
+	//点击文章标题加载文章内容
+	function getArtContent(id){
+		updateArtHits(id);
+		var result = getArticleById(id);
+		let html='';
+		let item = result.data[0];
+		html += `
+							<div>
+								<p style='margin-bottom: 10px;'>文章分类：
+										<span class='art-type' onclick="getArtLsByType('${item.art_type1}', null)">${item.art_type1Desc}</span> >> 
+										<span class='art-type' onclick="getArtLsByType('${item.art_type1}', '${item.art_type2}')">${item.art_type2Desc}</span>
+								</p>
+								<h1 class='article-title'>${item.art_title}</h1>
+								<p class='article-info'>
+									<span>作者：${item.art_author}</span>
+									<span>发表时间：${item.art_pubtime}</span>
+									<span>点击数：${item.art_hits}</span>
+								<div class='article-content'>${item.art_content}</div>
+							</div>
+						`;
+		$("#content").html(html);
+	}
+		</script>
+</html>
