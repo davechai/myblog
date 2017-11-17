@@ -78,9 +78,7 @@
 						<h2>文章描述</h2>
 						<textarea id="des" rows='10' cols='100' name="des"></textarea>
 						<h2>文章内容</h2>
-            <script id="container" name="content" type="text/plain">
-                这里写你的初始化内容
-            </script>
+            <script id="container" name="content" type="text/plain"></script>
             <!-- 配置文件 -->
             <script type="text/javascript" src="ueditor.config.js"></script>
             <!-- 编辑器源码文件 -->
@@ -111,10 +109,9 @@
 					var title = $("#title").val();
 					var author = $('#author').val();
 					var des = $('#des').val();
-					var type1 = $('#type1').val();
+					var type1 = $('#type').val();
 					var type2 = $('#type2').val();
 					var content = ue.getContent();
-
 					$.ajax({
 						type:'post',
 						url:'http://127.0.0.1/myblog-wysiwyg/data/article/addArticle.php',

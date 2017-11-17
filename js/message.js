@@ -1,7 +1,14 @@
 // 表单验证
 function check(){
-  var v_content = $('#text-content').val();
+  
   // 验证用户名
+  $('#text-content').blur(function(){
+    var v_content = $('#text-content').val();
+    if(v_content==''){
+      $('.text-content').html('既然来了，不留点什么吗').css({'color':'red','margin-left':'10px'});
+    }
+  });
+
   $('#name').blur(function(){
     var v_name = $('#name').val();
     if(v_name==''){
