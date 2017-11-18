@@ -74,12 +74,15 @@ function addMessage() {
   .then((res) => {
     var ress = JSON.parse(res);
     if(ress.code == 200) {
-        console.log('suc:' + ress.code);
-        console.log('添加成功');
-      } else {
-        console.log('err:' + ress);
-        console.log('添加失败');
-      }
+      $('#text-content').val('');
+      $('#name').val('');
+      $('#url').val('');
+      $('#email').val('');
+      $('span').html('');
+    } else {
+      console.log('err:' + ress);
+      console.log('添加失败');
+    }
   })
 }
 
@@ -94,7 +97,8 @@ function getComments(pno) {
           //分页
           //动态加载留言
         var html = '';
-        for(let c of data.data){
+        console.log(data.data);
+        for(let c of data.data.reverse()){
           html += `
                       <li>
                         <h3>${c.msg_user}说:</h3>
@@ -103,6 +107,7 @@ function getComments(pno) {
                       </li>
                     `
         }
+      
         $('#comment-container').html(html);
 					$("#page").paging({
 						pageNo: pno,
@@ -121,6 +126,14 @@ $(document).ready(function() {
   getComments(1);
   //给按钮绑定事件
   $('#btn').click(function() {
-    addMessage();
+    var v_content = $('#text-content').val();
+    var v_name = $('#name').val();
+    var v_email = $('#email').val();
+    if(v_content != '' && v_name != '' && v_email != ''){
+      addMessage();
+      getComments(1);
+    }else{
+      $('.tips').html('噢噢，你还没有填完哦').css('color','red');
+    }
   });
 });

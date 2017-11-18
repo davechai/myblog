@@ -18,7 +18,7 @@
   // 计算总页数
   $output["pageCount"]=ceil($output["recordCount"]/$output["pageSize"]);
   //根据页码来查询数据
-  $sql = "SELECT msg_id, msg_user, msg_content, msg_date FROM message";
+  $sql = "SELECT msg_id, msg_user, msg_content, msg_date FROM message order by msg_date";
 
 
   @$pno = $_REQUEST["pno"];
@@ -31,5 +31,4 @@
   $rows = mysqli_fetch_all($result,1);
   $output["data"]=$rows;
   echo json_encode($output);
-  
 ?>

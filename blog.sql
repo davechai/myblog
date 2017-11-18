@@ -7,14 +7,13 @@ USE myblog;
 CREATE TABLE article(
   art_id INT PRIMARY KEY AUTO_INCREMENT,
   art_title VARCHAR(256) NOT NULL,
-  art_pic VARCHAR(128),
   art_des VARCHAR(512) NOT NULL,
   art_pubtime DATETIME,
   art_type1 VARCHAR(64) NOT NULL,
   art_type2 VARCHAR(64) NOT NULL,
   art_path VARCHAR(128),
   art_hits INT,
-  art_content BLOB
+  art_content LONGBLOB
 );
 
 CREATE TABLE art_type_def(
