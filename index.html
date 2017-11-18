@@ -76,8 +76,8 @@
 
     // 点击菜单切换主体内容
     var chgPage = function(page){
-			if(page == "article") {type1 = "TEC";type2 = null;};		//文章一级分类：TEC-技术文章
-			if(page == "note") {type1 = "NOTE";type2 = null;}		//文章一级分类：NOTE-读书笔记
+			if(page == "article") {type1 = "1";type2 = null;};		//文章一级分类：TEC-技术文章
+			if(page == "note") {type1 = "2";type2 = null;}		//文章一级分类：NOTE-读书笔记
       $("#content").load(page + ".html");
     }
     //背景颜色切换功能
@@ -92,10 +92,10 @@
 	 function getArtLsByType(type_lv1, type_lv2){
   	type1 = type_lv1;
     type2 = type_lv2;
-    if(type_lv1 == "TEC"){
+    if(type_lv1 == "1"){
 			$("#content").load("article.html");
 		} 
-    if(type_lv1 == "NOTE") {
+    if(type_lv1 == "2") {
 			$("#content").load("note.html");
 		}
    }

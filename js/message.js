@@ -85,7 +85,7 @@ function addMessage() {
     }
   })
 }
-
+// 获取留言内容
 function getComments(pno) {
 			$.ajax({
 				url: "http://127.0.0.1/blog/data/message/getMessage.php",
@@ -97,7 +97,6 @@ function getComments(pno) {
           //分页
           //动态加载留言
         var html = '';
-        console.log(data.data);
         for(let c of data.data.reverse()){
           html += `
                       <li>

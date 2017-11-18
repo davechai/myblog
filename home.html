@@ -59,7 +59,6 @@
       url:'http://127.0.0.1/myblog-wysiwyg/data/article/getArticle.php?type1=' + type1 + '&type2=' + type2,
       data: {pno:pno},
       success:(res)=>{
-        console.log(res);
         $("#page").paging({
 						pageNo: pno,
 						totalPage: res.pageCount,
@@ -148,13 +147,13 @@
   };
 
 $('.wechat').hover(function(){
-  $('#wechat').toggle(600);
+  $('#wechat').toggle();
 });
 $('.weibo').hover(function(){
-  $('#weibo').toggle(600);
+  $('#weibo').toggle();
 });
 $('.qq').hover(function(){
-  $('#qq').toggle(600);
+  $('#qq').toggle();
 });
 
 

@@ -12,6 +12,7 @@
   VALUES('$name','$content',now(),'$email','$url')";
   //查询结果
   $result = mysqli_query($conn,$sql);
+  var_dump($result);
   if($result){
     echo json_encode('{"code": 200, "msg": "添加成功"}');
   }else{

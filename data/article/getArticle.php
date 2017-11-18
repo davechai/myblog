@@ -30,22 +30,20 @@
 	// }
 
 
- $sql = "SELECT art.art_id
- 								, art.art_title
-								, art.art_author
-								, art.art_type1
-								, par1.param_name art_type1Desc
-								, par2.param_name art_type2Desc
-								, art.art_type2
-								, art.art_hits
-								, art.art_pubtime
-								, art.art_des
-								, art.art_content 
-				 FROM article art
-				 LEFT JOIN blog_parameter par1 ON art.art_type1 = par1.param_code AND par1.param_type = 'ART_TYPE_LV1'
-				 LEFT JOIN blog_parameter par2 ON art.art_type2 = par2.param_code AND par2.param_type = 'ART_TYPE_LV2'
-						 AND par2.pre_type = 'ART_TYPE_LV1' AND art.art_type1 = par2.pre_type_code
-				 WHERE 1 = 1";
+ $sql = " SELECT art.art_id 
+ 							, art.art_title 
+							, art.art_author 
+							, art.art_type1 
+							, def.art_type1_des AS art_type1Desc
+							, def.art_type2_des AS art_type2Desc
+							, art.art_type2 
+							, art.art_hits 
+							, art.art_pubtime 
+							, art.art_des 
+							, art.art_content 
+					FROM article art 
+						LEFT JOIN art_type_def def ON def.art_type1=art.art_type1 AND def.art_type2=art.art_type2 
+					WHERE 1 = 1";
 	// echo $sql;
 	
  if($type1 != 'null' && $type1 != ''){
