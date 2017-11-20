@@ -130,9 +130,9 @@ $(document).ready(function() {
     var v_email = $('#email').val();
     if(v_content != '' && v_name != '' && v_email != ''){
       addMessage();
-      getComments(1);
     }else{
       $('.tips').html('噢噢，你还没有填完哦').css('color','red');
     }
+    getComments(1);
   });
 });
