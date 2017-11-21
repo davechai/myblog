@@ -1,2 +1,2 @@
 # myblog
-this is a blog to share something about front-end tech and books 
+this is a blog to share something about font-end tech and books,It is based jQuery+Php+MySql+Linux 
